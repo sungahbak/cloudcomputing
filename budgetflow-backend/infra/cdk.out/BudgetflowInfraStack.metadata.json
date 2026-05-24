@@ -1,0 +1,530 @@
+{
+  "/BudgetflowInfraStack": [
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "<anonymous> (/home/pasun/budgetflow-infra/bin/budgetflow-infra.ts:6:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    },
+    {
+      "type": "aws:cdk:error",
+      "data": "Need to perform AWS calls for account 842544789367, but no credentials have been configured",
+      "trace": [
+        "Annotations.addMessage (/home/pasun/budgetflow-infra/node_modules/aws-cdk-lib/core/lib/annotations.js:1:2399)",
+        "Annotations.addError (/home/pasun/budgetflow-infra/node_modules/aws-cdk-lib/core/lib/annotations.js:1:1631)",
+        "Annotations._addTrackableError (/home/pasun/budgetflow-infra/node_modules/aws-cdk-lib/core/lib/annotations.js:1:1730)",
+        "Function.getValue (/home/pasun/budgetflow-infra/node_modules/aws-cdk-lib/core/lib/context-provider.js:2:1886)",
+        "Function.fromLookup (/home/pasun/budgetflow-infra/node_modules/aws-cdk-lib/aws-ec2/lib/vpc.js:1:13916)",
+        "new BudgetflowInfraStack (/home/pasun/budgetflow-infra/lib/budgetflow-infra-stack.ts:18:25)",
+        "Object.<anonymous> (/home/pasun/budgetflow-infra/bin/budgetflow-infra.ts:6:1)",
+        "Module._compile (node:internal/modules/cjs/loader:1705:14)",
+        "Module.m._compile (/home/pasun/budgetflow-infra/node_modules/ts-node/src/index.ts:1618:23)",
+        "node:internal/modules/cjs/loader:1838:10",
+        "Object.require.extensions.<computed> [as .ts] (/home/pasun/budgetflow-infra/node_modules/ts-node/src/index.ts:1621:12)",
+        "Module.load (node:internal/modules/cjs/loader:1441:32)",
+        "Function._load (node:internal/modules/cjs/loader:1263:12)",
+        "TracingChannel.traceSync (node:diagnostics_channel:328:14)",
+        "wrapModuleLoad (node:internal/modules/cjs/loader:237:24)",
+        "Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)",
+        "phase4 (/home/pasun/budgetflow-infra/node_modules/ts-node/src/bin.ts:649:14)",
+        "bootstrap (/home/pasun/budgetflow-infra/node_modules/ts-node/src/bin.ts:95:10)",
+        "main (/home/pasun/budgetflow-infra/node_modules/ts-node/src/bin.ts:55:10)",
+        "Object.<anonymous> (/home/pasun/budgetflow-infra/node_modules/ts-node/src/bin.ts:800:3)",
+        "Module._compile (node:internal/modules/cjs/loader:1705:14)",
+        "Object.<anonymous> (node:internal/modules/cjs/loader:1838:10)",
+        "Module.load (node:internal/modules/cjs/loader:1441:32)",
+        "Function._load (node:internal/modules/cjs/loader:1263:12)",
+        "TracingChannel.traceSync (node:diagnostics_channel:328:14)",
+        "wrapModuleLoad (node:internal/modules/cjs/loader:237:24)",
+        "Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)",
+        "node:internal/main/run_main_module:36:49"
+      ]
+    },
+    {
+      "type": "aws:cdk:error-code",
+      "data": "ContextProviderError"
+    }
+  ],
+  "/BudgetflowInfraStack/DefaultVpc": [
+    {
+      "type": "aws:cdk:analytics:construct",
+      "data": "*"
+    }
+  ],
+  "/BudgetflowInfraStack/BudgetFlowStorageBucket": [
+    {
+      "type": "aws:cdk:analytics:construct",
+      "data": {
+        "bucketName": "*",
+        "removalPolicy": "destroy",
+        "autoDeleteObjects": true,
+        "blockPublicAccess": "*"
+      }
+    }
+  ],
+  "/BudgetflowInfraStack/Custom::S3AutoDeleteObjectsCustomResourceProvider": [
+    {
+      "type": "aws:cdk:is-custom-resource-handler-customResourceProvider",
+      "data": true
+    }
+  ],
+  "/BudgetflowInfraStack/ExpressServerSG": [
+    {
+      "type": "aws:cdk:analytics:construct",
+      "data": {
+        "vpc": "*",
+        "description": "*",
+        "allowAllOutbound": true
+      }
+    },
+    {
+      "type": "aws:cdk:analytics:method",
+      "data": {
+        "addIngressRule": [
+          {
+            "canInlineRule": true,
+            "connections": "*",
+            "uniqueId": "*"
+          },
+          {},
+          "*"
+        ]
+      }
+    },
+    {
+      "type": "aws:cdk:analytics:method",
+      "data": {
+        "addIngressRule": [
+          {
+            "canInlineRule": true,
+            "connections": "*",
+            "uniqueId": "*"
+          },
+          {},
+          "*"
+        ]
+      }
+    }
+  ],
+  "/BudgetflowInfraStack/PostgreSQLSG": [
+    {
+      "type": "aws:cdk:analytics:construct",
+      "data": {
+        "vpc": "*",
+        "description": "*"
+      }
+    },
+    {
+      "type": "aws:cdk:analytics:method",
+      "data": {
+        "addIngressRule": [
+          "*",
+          {},
+          "*"
+        ]
+      }
+    }
+  ],
+  "/BudgetflowInfraStack/BudgetFlowRDS": [
+    {
+      "type": "aws:cdk:analytics:construct",
+      "data": {
+        "engine": {
+          "engineType": "*",
+          "engineVersion": {
+            "fullVersion": "*",
+            "majorVersion": "*"
+          },
+          "parameterGroupFamily": "*",
+          "singleUserRotationApplication": "*",
+          "engineFamily": "*",
+          "supportsReadReplicaBackups": "*",
+          "defaultUsername": "*"
+        },
+        "instanceType": "*",
+        "vpc": "*",
+        "vpcSubnets": {
+          "subnetType": "Public"
+        },
+        "securityGroups": [
+          "*"
+        ],
+        "databaseName": "*",
+        "credentials": "*",
+        "allocatedStorage": "*",
+        "maxAllocatedStorage": "*",
+        "publiclyAccessible": true,
+        "removalPolicy": "destroy",
+        "deleteAutomatedBackups": true
+      }
+    }
+  ],
+  "/BudgetflowInfraStack/ImportedEC2Role": [
+    {
+      "type": "aws:cdk:analytics:construct",
+      "data": "*"
+    }
+  ],
+  "/BudgetflowInfraStack/ExpressServerEC2": [
+    {
+      "type": "aws:cdk:analytics:construct",
+      "data": {
+        "vpc": "*",
+        "instanceType": "*",
+        "machineImage": "*",
+        "securityGroup": "*",
+        "vpcSubnets": {
+          "subnetType": "Public"
+        },
+        "keyName": "*",
+        "role": "*"
+      }
+    }
+  ],
+  "/BudgetflowInfraStack/SsmParameterValue:--aws--service--ami-amazon-linux-latest--al2023-ami-kernel-6.1-x86_64:C96584B6-F00A-464E-AD19-53AFF4B05118.Parameter": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "SsmParameterValueawsserviceamiamazonlinuxlatestal2023amikernel61x8664C96584B6F00A464EAD1953AFF4B05118Parameter"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Instance2 in aws-cdk-lib...",
+        "new BudgetflowInfraStack (/home/pasun/budgetflow-infra/lib/budgetflow-infra-stack.ts:111:25)",
+        "<anonymous> (/home/pasun/budgetflow-infra/bin/budgetflow-infra.ts:6:1)",
+        "...node internals..."
+      ]
+    }
+  ],
+  "/BudgetflowInfraStack/S3BucketName": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "S3BucketName"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "new BudgetflowInfraStack (/home/pasun/budgetflow-infra/lib/budgetflow-infra-stack.ts:129:5)",
+        "<anonymous> (/home/pasun/budgetflow-infra/bin/budgetflow-infra.ts:6:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/BudgetflowInfraStack/RDSEndpoint": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "RDSEndpoint"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "new BudgetflowInfraStack (/home/pasun/budgetflow-infra/lib/budgetflow-infra-stack.ts:130:5)",
+        "<anonymous> (/home/pasun/budgetflow-infra/bin/budgetflow-infra.ts:6:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/BudgetflowInfraStack/EC2PublicIP": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "EC2PublicIP"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "new BudgetflowInfraStack (/home/pasun/budgetflow-infra/lib/budgetflow-infra-stack.ts:131:5)",
+        "<anonymous> (/home/pasun/budgetflow-infra/bin/budgetflow-infra.ts:6:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/BudgetflowInfraStack/BootstrapVersion": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "BootstrapVersion"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...aws-cdk-lib...",
+        "(no user code in 10 frames, use --stack-trace-limit to capture more)"
+      ]
+    }
+  ],
+  "/BudgetflowInfraStack/CheckBootstrapVersion": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "CheckBootstrapVersion"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...aws-cdk-lib...",
+        "(no user code in 10 frames, use --stack-trace-limit to capture more)"
+      ]
+    }
+  ],
+  "/BudgetflowInfraStack/DefaultVpc/PublicSubnet1": [
+    {
+      "type": "aws:cdk:analytics:construct",
+      "data": "*"
+    }
+  ],
+  "/BudgetflowInfraStack/DefaultVpc/PublicSubnet2": [
+    {
+      "type": "aws:cdk:analytics:construct",
+      "data": "*"
+    }
+  ],
+  "/BudgetflowInfraStack/DefaultVpc/PrivateSubnet1": [
+    {
+      "type": "aws:cdk:analytics:construct",
+      "data": "*"
+    }
+  ],
+  "/BudgetflowInfraStack/DefaultVpc/PrivateSubnet2": [
+    {
+      "type": "aws:cdk:analytics:construct",
+      "data": "*"
+    }
+  ],
+  "/BudgetflowInfraStack/DefaultVpc/IsolatedSubnet1": [
+    {
+      "type": "aws:cdk:analytics:construct",
+      "data": "*"
+    }
+  ],
+  "/BudgetflowInfraStack/DefaultVpc/IsolatedSubnet2": [
+    {
+      "type": "aws:cdk:analytics:construct",
+      "data": "*"
+    }
+  ],
+  "/BudgetflowInfraStack/BudgetFlowStorageBucket/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "BudgetFlowStorageBucketD382DD88"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Bucket2 in aws-cdk-lib...",
+        "new BudgetflowInfraStack (/home/pasun/budgetflow-infra/lib/budgetflow-infra-stack.ts:25:22)",
+        "<anonymous> (/home/pasun/budgetflow-infra/bin/budgetflow-infra.ts:6:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    },
+    {
+      "type": "aws:cdk:analytics:mixin",
+      "data": {
+        "mixin": "aws-cdk-lib.aws_s3.mixins.BucketAutoDeleteObjects"
+      }
+    }
+  ],
+  "/BudgetflowInfraStack/BudgetFlowStorageBucket/Policy": [
+    {
+      "type": "aws:cdk:analytics:construct",
+      "data": {
+        "bucket": "*"
+      }
+    }
+  ],
+  "/BudgetflowInfraStack/BudgetFlowStorageBucket/AutoDeleteObjectsCustomResource": [
+    {
+      "type": "aws:cdk:analytics:construct",
+      "data": "*"
+    }
+  ],
+  "/BudgetflowInfraStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Role": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...aws-cdk-lib...",
+        "(no user code in 10 frames, use --stack-trace-limit to capture more)"
+      ]
+    }
+  ],
+  "/BudgetflowInfraStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...aws-cdk-lib...",
+        "(no user code in 10 frames, use --stack-trace-limit to capture more)"
+      ]
+    }
+  ],
+  "/BudgetflowInfraStack/ExpressServerSG/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ExpressServerSG9B29D164"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new SecurityGroup2 in aws-cdk-lib...",
+        "new BudgetflowInfraStack (/home/pasun/budgetflow-infra/lib/budgetflow-infra-stack.ts:39:30)",
+        "<anonymous> (/home/pasun/budgetflow-infra/bin/budgetflow-infra.ts:6:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/BudgetflowInfraStack/PostgreSQLSG/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "PostgreSQLSG868E1B79"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new SecurityGroup2 in aws-cdk-lib...",
+        "new BudgetflowInfraStack (/home/pasun/budgetflow-infra/lib/budgetflow-infra-stack.ts:58:30)",
+        "<anonymous> (/home/pasun/budgetflow-infra/bin/budgetflow-infra.ts:6:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/BudgetflowInfraStack/PostgreSQLSG/from BudgetflowInfraStackExpressServerSG30F87873:5432": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "PostgreSQLSGfromBudgetflowInfraStackExpressServerSG30F878735432FB40B23B"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...WrappedClass.<anonymous> in aws-cdk-lib...",
+        "new BudgetflowInfraStack (/home/pasun/budgetflow-infra/lib/budgetflow-infra-stack.ts:64:22)",
+        "<anonymous> (/home/pasun/budgetflow-infra/bin/budgetflow-infra.ts:6:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/BudgetflowInfraStack/BudgetFlowRDS/SubnetGroup": [
+    {
+      "type": "aws:cdk:analytics:construct",
+      "data": {
+        "description": "*",
+        "vpc": "*",
+        "vpcSubnets": {
+          "subnetType": "Public"
+        },
+        "removalPolicy": "*"
+      }
+    }
+  ],
+  "/BudgetflowInfraStack/BudgetFlowRDS/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "BudgetFlowRDS05CD4B2D"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new DatabaseInstance2 in aws-cdk-lib...",
+        "new BudgetflowInfraStack (/home/pasun/budgetflow-infra/lib/budgetflow-infra-stack.ts:75:24)",
+        "<anonymous> (/home/pasun/budgetflow-infra/bin/budgetflow-infra.ts:6:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/BudgetflowInfraStack/ExpressServerEC2/InstanceProfile": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ExpressServerEC2InstanceProfileB4E08A87"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Instance2 in aws-cdk-lib...",
+        "new BudgetflowInfraStack (/home/pasun/budgetflow-infra/lib/budgetflow-infra-stack.ts:111:25)",
+        "<anonymous> (/home/pasun/budgetflow-infra/bin/budgetflow-infra.ts:6:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/BudgetflowInfraStack/ExpressServerEC2/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ExpressServerEC2234621D5"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Instance2 in aws-cdk-lib...",
+        "new BudgetflowInfraStack (/home/pasun/budgetflow-infra/lib/budgetflow-infra-stack.ts:111:25)",
+        "<anonymous> (/home/pasun/budgetflow-infra/bin/budgetflow-infra.ts:6:1)",
+        "...node internals, ts-node, ts-node..."
+      ]
+    }
+  ],
+  "/BudgetflowInfraStack/CDKMetadata/Default": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "CDKMetadata"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...aws-cdk-lib, node internals...",
+        "(no user code in 10 frames, use --stack-trace-limit to capture more)"
+      ]
+    }
+  ],
+  "/BudgetflowInfraStack/BudgetFlowStorageBucket/Policy/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "BudgetFlowStorageBucketPolicy4A26EC82"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Bucket2 in aws-cdk-lib...",
+        "new BudgetflowInfraStack (/home/pasun/budgetflow-infra/lib/budgetflow-infra-stack.ts:25:22)",
+        "<anonymous> (/home/pasun/budgetflow-infra/bin/budgetflow-infra.ts:6:1)",
+        "...node internals..."
+      ]
+    },
+    {
+      "type": "aws:cdk:analytics:mixin",
+      "data": {
+        "mixin": "aws-cdk-lib.aws_s3.mixins.BucketPolicyStatements"
+      }
+    }
+  ],
+  "/BudgetflowInfraStack/BudgetFlowStorageBucket/AutoDeleteObjectsCustomResource/Default": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "BudgetFlowStorageBucketAutoDeleteObjectsCustomResource9A311A75"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...aws-cdk-lib...",
+        "(no user code in 10 frames, use --stack-trace-limit to capture more)"
+      ]
+    }
+  ],
+  "/BudgetflowInfraStack/BudgetFlowRDS/SubnetGroup/Default": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "BudgetFlowRDSSubnetGroup15A1D6A1"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new DatabaseInstance2 in aws-cdk-lib...",
+        "new BudgetflowInfraStack (/home/pasun/budgetflow-infra/lib/budgetflow-infra-stack.ts:75:24)",
+        "<anonymous> (/home/pasun/budgetflow-infra/bin/budgetflow-infra.ts:6:1)",
+        "...node internals, ts-node..."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "version": "53.0.0",
+  "files": {
+    "faa95a81ae7d7373f3e1f242268f904eb748d8d0fdd306e8a6fe515a1905a7d6": {
+      "displayName": "BudgetflowInfraStack/Custom::S3AutoDeleteObjectsCustomResourceProvider Code",
+      "source": {
+        "path": "asset.faa95a81ae7d7373f3e1f242268f904eb748d8d0fdd306e8a6fe515a1905a7d6",
+        "packaging": "zip"
+      },
+      "destinations": {
+        "842544789367-ap-northeast-2-39f649d5": {
+          "bucketName": "cdk-hnb659fds-assets-842544789367-ap-northeast-2",
+          "objectKey": "faa95a81ae7d7373f3e1f242268f904eb748d8d0fdd306e8a6fe515a1905a7d6.zip",
+          "region": "ap-northeast-2",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::842544789367:role/cdk-hnb659fds-file-publishing-role-842544789367-ap-northeast-2"
+        }
+      }
+    },
+    "3e396bea8a6fb6a922c60b625b219108ec508b92772abc5af552a78bbfeb9432": {
+      "displayName": "BudgetflowInfraStack Template",
+      "source": {
+        "path": "BudgetflowInfraStack.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "842544789367-ap-northeast-2-e0e58999": {
+          "bucketName": "cdk-hnb659fds-assets-842544789367-ap-northeast-2",
+          "objectKey": "3e396bea8a6fb6a922c60b625b219108ec508b92772abc5af552a78bbfeb9432.json",
+          "region": "ap-northeast-2",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::842544789367:role/cdk-hnb659fds-file-publishing-role-842544789367-ap-northeast-2"
+        }
+      }
+    }
+  },
+  "dockerImages": {}
+}

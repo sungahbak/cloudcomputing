@@ -1,0 +1,40 @@
+{
+  "title": "Validation Report",
+  "pluginReports": [
+    {
+      "summary": {
+        "pluginName": "Construct Annotations",
+        "status": "failure"
+      },
+      "violations": [
+        {
+          "ruleName": "aws-cdk:error",
+          "description": "Need to perform AWS calls for account 842544789367, but no credentials have been configured",
+          "severity": "error",
+          "violatingResources": [
+            {
+              "constructPath": "BudgetflowInfraStack",
+              "templatePath": "cdk.out/BudgetflowInfraStack.template.json",
+              "locations": []
+            }
+          ],
+          "violatingConstructs": [
+            {
+              "constructStack": {
+                "id": "BudgetflowInfraStack",
+                "path": "BudgetflowInfraStack",
+                "construct": "aws-cdk-lib.Stack",
+                "libraryVersion": "2.257.0",
+                "location": "<anonymous> (/home/pasun/budgetflow-infra/bin/budgetflow-infra.ts:6:1)"
+              },
+              "constructPath": "BudgetflowInfraStack",
+              "locations": [],
+              "resourceLogicalId": "N/A",
+              "templatePath": "cdk.out/BudgetflowInfraStack.template.json"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

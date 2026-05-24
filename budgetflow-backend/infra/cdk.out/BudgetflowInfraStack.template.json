@@ -1,0 +1,404 @@
+{
+ "Resources": {
+  "BudgetFlowStorageBucketD382DD88": {
+   "Type": "AWS::S3::Bucket",
+   "Properties": {
+    "BucketName": "pasun-budgetflow-storage-ap-northeast-2",
+    "PublicAccessBlockConfiguration": {
+     "BlockPublicAcls": true,
+     "BlockPublicPolicy": true,
+     "IgnorePublicAcls": true,
+     "RestrictPublicBuckets": true
+    },
+    "Tags": [
+     {
+      "Key": "aws-cdk:auto-delete-objects",
+      "Value": "true"
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "BudgetflowInfraStack/BudgetFlowStorageBucket/Resource"
+   }
+  },
+  "BudgetFlowStorageBucketPolicy4A26EC82": {
+   "Type": "AWS::S3::BucketPolicy",
+   "Properties": {
+    "Bucket": {
+     "Ref": "BudgetFlowStorageBucketD382DD88"
+    },
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "s3:DeleteObject*",
+        "s3:GetBucket*",
+        "s3:List*",
+        "s3:PutBucketPolicy"
+       ],
+       "Effect": "Allow",
+       "Principal": {
+        "AWS": {
+         "Fn::GetAtt": [
+          "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092",
+          "Arn"
+         ]
+        }
+       },
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "BudgetFlowStorageBucketD382DD88",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "BudgetFlowStorageBucketD382DD88",
+             "Arn"
+            ]
+           },
+           "/*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "BudgetflowInfraStack/BudgetFlowStorageBucket/Policy/Resource"
+   }
+  },
+  "BudgetFlowStorageBucketAutoDeleteObjectsCustomResource9A311A75": {
+   "Type": "Custom::S3AutoDeleteObjects",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F",
+      "Arn"
+     ]
+    },
+    "BucketName": {
+     "Ref": "BudgetFlowStorageBucketD382DD88"
+    }
+   },
+   "DependsOn": [
+    "BudgetFlowStorageBucketPolicy4A26EC82"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "BudgetflowInfraStack/BudgetFlowStorageBucket/AutoDeleteObjectsCustomResource/Default"
+   }
+  },
+  "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Version": "2012-10-17",
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ]
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Sub": "arn:${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "BudgetflowInfraStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Role"
+   }
+  },
+  "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-842544789367-ap-northeast-2",
+     "S3Key": "faa95a81ae7d7373f3e1f242268f904eb748d8d0fdd306e8a6fe515a1905a7d6.zip"
+    },
+    "Timeout": 900,
+    "MemorySize": 128,
+    "Handler": "index.handler",
+    "Role": {
+     "Fn::GetAtt": [
+      "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs22.x",
+    "Description": {
+     "Fn::Join": [
+      "",
+      [
+       "Lambda function for auto-deleting objects in ",
+       {
+        "Ref": "BudgetFlowStorageBucketD382DD88"
+       },
+       " S3 bucket."
+      ]
+     ]
+    }
+   },
+   "DependsOn": [
+    "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "BudgetflowInfraStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler",
+    "aws:asset:path": "asset.faa95a81ae7d7373f3e1f242268f904eb748d8d0fdd306e8a6fe515a1905a7d6",
+    "aws:asset:property": "Code"
+   }
+  },
+  "ExpressServerSG9B29D164": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "BudgetFlow Express Server Security Group",
+    "SecurityGroupEgress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow all outbound traffic by default",
+      "IpProtocol": "-1"
+     }
+    ],
+    "SecurityGroupIngress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow SSH access",
+      "FromPort": 22,
+      "IpProtocol": "tcp",
+      "ToPort": 22
+     },
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow Express API access",
+      "FromPort": 3000,
+      "IpProtocol": "tcp",
+      "ToPort": 3000
+     }
+    ],
+    "VpcId": "vpc-12345"
+   },
+   "Metadata": {
+    "aws:cdk:path": "BudgetflowInfraStack/ExpressServerSG/Resource"
+   }
+  },
+  "PostgreSQLSG868E1B79": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "BudgetFlow PostgreSQL Database Security Group",
+    "SecurityGroupEgress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow all outbound traffic by default",
+      "IpProtocol": "-1"
+     }
+    ],
+    "VpcId": "vpc-12345"
+   },
+   "Metadata": {
+    "aws:cdk:path": "BudgetflowInfraStack/PostgreSQLSG/Resource"
+   }
+  },
+  "PostgreSQLSGfromBudgetflowInfraStackExpressServerSG30F878735432FB40B23B": {
+   "Type": "AWS::EC2::SecurityGroupIngress",
+   "Properties": {
+    "Description": "Allow PostgreSQL access only from Express Server",
+    "FromPort": 5432,
+    "GroupId": {
+     "Fn::GetAtt": [
+      "PostgreSQLSG868E1B79",
+      "GroupId"
+     ]
+    },
+    "IpProtocol": "tcp",
+    "SourceSecurityGroupId": {
+     "Fn::GetAtt": [
+      "ExpressServerSG9B29D164",
+      "GroupId"
+     ]
+    },
+    "ToPort": 5432
+   },
+   "Metadata": {
+    "aws:cdk:path": "BudgetflowInfraStack/PostgreSQLSG/from BudgetflowInfraStackExpressServerSG30F87873:5432"
+   }
+  },
+  "BudgetFlowRDSSubnetGroup15A1D6A1": {
+   "Type": "AWS::RDS::DBSubnetGroup",
+   "Properties": {
+    "DBSubnetGroupDescription": "Subnet group for BudgetFlowRDS database",
+    "SubnetIds": [
+     "s-12345",
+     "s-67890"
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "BudgetflowInfraStack/BudgetFlowRDS/SubnetGroup/Default"
+   }
+  },
+  "BudgetFlowRDS05CD4B2D": {
+   "Type": "AWS::RDS::DBInstance",
+   "Properties": {
+    "AllocatedStorage": "20",
+    "CopyTagsToSnapshot": true,
+    "DBInstanceClass": "db.t3.micro",
+    "DBName": "budgetflow",
+    "DBSubnetGroupName": {
+     "Ref": "BudgetFlowRDSSubnetGroup15A1D6A1"
+    },
+    "DeleteAutomatedBackups": true,
+    "Engine": "postgres",
+    "EngineVersion": "15",
+    "MasterUserPassword": "InhaComputerScience2026!",
+    "MasterUsername": "pasun",
+    "MaxAllocatedStorage": 20,
+    "PubliclyAccessible": true,
+    "StorageType": "gp2",
+    "VPCSecurityGroups": [
+     {
+      "Fn::GetAtt": [
+       "PostgreSQLSG868E1B79",
+       "GroupId"
+      ]
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "BudgetflowInfraStack/BudgetFlowRDS/Resource"
+   }
+  },
+  "ExpressServerEC2InstanceProfileB4E08A87": {
+   "Type": "AWS::IAM::InstanceProfile",
+   "Properties": {
+    "Roles": [
+     "SafeInstanceProfileForUser-pasun"
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "BudgetflowInfraStack/ExpressServerEC2/InstanceProfile"
+   }
+  },
+  "ExpressServerEC2234621D5": {
+   "Type": "AWS::EC2::Instance",
+   "Properties": {
+    "AvailabilityZone": "dummy1a",
+    "IamInstanceProfile": {
+     "Ref": "ExpressServerEC2InstanceProfileB4E08A87"
+    },
+    "ImageId": {
+     "Ref": "SsmParameterValueawsserviceamiamazonlinuxlatestal2023amikernel61x8664C96584B6F00A464EAD1953AFF4B05118Parameter"
+    },
+    "InstanceType": "t3.micro",
+    "KeyName": "budgetflow-key",
+    "SecurityGroupIds": [
+     {
+      "Fn::GetAtt": [
+       "ExpressServerSG9B29D164",
+       "GroupId"
+      ]
+     }
+    ],
+    "SubnetId": "s-12345",
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "BudgetflowInfraStack/ExpressServerEC2"
+     }
+    ],
+    "UserData": {
+     "Fn::Base64": "#!/bin/bash"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "BudgetflowInfraStack/ExpressServerEC2/Resource"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/7VUwW7bMAz9luo4qN6QYhiQW9JgQy5rkGy7BMFAS0ymRJY8UUprGP73wZKdOE07dIcBNixT4iP5+MRRNvr4KftwA490K+ThVqs8q1cexIEvkWxwAtfsHeN/eTccHulnTXdZPQ3igH5dszwuvkKBbByPOSzsEfTCaiUqNmYSyTtbMc4geDtDjR4f8j0KT2zsXUDOcm3FYRFyrcRECCSKUM2G32/NKVChnpRhYzbMv02H7rK4RVk6OrmK0mx42ko5nZK+inLaf2us5LDy4LFAE0M1HMUoq1coglO++uJsKNc1O5ai40ciCadKr6zpLKC1fZxo/RB8boORiZaG1wyknJudQ6Jl0MjG65oJMHOjlcFkSQQKawyKFpI6zGDU74BzmWrkdRP7978wX6/uxYjtyd470n/B1pWhc+ZzQx6MwAs6VWf8VpW9AgsQv5TBeQG73kRDvM52LMUq5AZbHdaM4rJDSVpkDWcHrIbathoHqukTariTlNUz8JAD4SBPNDtlsMVPq0GWyfADHUWuarYNWp9+u0L21g1NDWclOCjQo4ulfIZC6aovUpmdxu+Ebmk9tC2YlKVWAgZaS1Ev3UJZWudpiSCXGB2mIA6hpFNPtxC0b4FNz0XzIvPntryJ3IuuUBLGhjPZ8TggXjiUaLwCTYNLI8CjXHnrzo0u4Gny8k4Zw+oqTRiVn5X++sSScY60E6VoAU+0xPu54anC/opfX+x/pON5Hr3MZtNBoGQ4K09BkQ2kuHB2qzQ2/D6Qt8Vwskes3vBsf+HsUUl0UyDkEyL0Kw87ZXatz6KXXPvzEHwZfMONlZjt6f1xNMra52ZPSt26YLwqMFum7x/gLSX+dAYAAA=="
+   },
+   "Metadata": {
+    "aws:cdk:path": "BudgetflowInfraStack/CDKMetadata/Default"
+   }
+  }
+ },
+ "Parameters": {
+  "SsmParameterValueawsserviceamiamazonlinuxlatestal2023amikernel61x8664C96584B6F00A464EAD1953AFF4B05118Parameter": {
+   "Type": "AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>",
+   "Default": "/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-6.1-x86_64"
+  },
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Outputs": {
+  "S3BucketName": {
+   "Value": {
+    "Ref": "BudgetFlowStorageBucketD382DD88"
+   }
+  },
+  "RDSEndpoint": {
+   "Value": {
+    "Fn::GetAtt": [
+     "BudgetFlowRDS05CD4B2D",
+     "Endpoint.Address"
+    ]
+   }
+  },
+  "EC2PublicIP": {
+   "Value": {
+    "Fn::GetAtt": [
+     "ExpressServerEC2234621D5",
+     "PublicIp"
+    ]
+   }
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}
